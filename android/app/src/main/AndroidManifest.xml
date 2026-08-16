@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="horyx_game"
+        android:label="Horyx Games"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

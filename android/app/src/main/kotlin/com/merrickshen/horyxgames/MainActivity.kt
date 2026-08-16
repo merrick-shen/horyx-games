@@ -1,4 +1,4 @@
-package com.example.horyx_game
+package com.merrickshen.horyxgames
 
 import io.flutter.embedding.android.FlutterActivity
 
