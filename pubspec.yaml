@@ -1,4 +1,4 @@
-name: horyx_game
+name: horyx_games
 description: "Horyx Games 随时开局的掌上游戏厅"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
