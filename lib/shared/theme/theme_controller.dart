@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:horyx_games/shared/storage/theme_storage.dart';
-import 'app_theme.dart';
+import 'package:horyx_games/shared/theme/app_theme.dart';
 
 /// 主题控制器
 /// 持有当前主题状态（模式 + 强调色），变更时：
