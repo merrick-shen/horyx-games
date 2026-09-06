@@ -6,7 +6,7 @@ import 'package:horyx_games/games/tank/pages/tank_online_page.dart';
 import 'package:horyx_games/games/tank/services/tank_storage.dart';
 import 'package:horyx_games/games/tank/widgets/tank_setup_view.dart';
 import 'package:horyx_games/shared/game/game_data.dart';
-import 'package:horyx_games/shared/network/room_page.dart';
+import 'package:horyx_games/shared/pages/room_page.dart';
 import 'package:horyx_games/shared/storage/archive_storage.dart';
 import 'package:horyx_games/shared/storage/game_archive_state.dart';
 import 'package:horyx_games/shared/widgets/app_top_bar.dart';

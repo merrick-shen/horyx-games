@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:horyx_games/shared/network/room_page.dart';
+import 'package:horyx_games/shared/pages/room_page.dart';
 import 'package:horyx_games/shared/theme/app_theme.dart';
 import 'package:horyx_games/shared/widgets/alert_dialog.dart';
 import 'package:horyx_games/shared/widgets/app_page_scaffold.dart';
