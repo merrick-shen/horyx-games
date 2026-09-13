@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-import 'package:horyx_games/games/tank/engine/tint_filter.dart';
+import 'package:horyx_games/games/tank/tint_filter.dart';
 import 'package:horyx_games/shared/utils/asset_image.dart';
 
 /// 比分数字烟雾覆盖层（widget 层，叠在比分数字上）：
