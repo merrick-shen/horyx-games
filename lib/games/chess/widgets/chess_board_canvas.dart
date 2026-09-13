@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:horyx_games/games/chess/models/chess_board.dart';
+import 'package:horyx_games/games/chess/widgets/chess_board_geometry.dart';
 import 'package:horyx_games/games/chess/widgets/chess_board_painter.dart';
 import 'package:horyx_games/shared/theme/app_theme.dart';
 
