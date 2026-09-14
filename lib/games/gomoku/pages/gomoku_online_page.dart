@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:horyx_games/games/gomoku/services/gomoku_online_controller.dart';
 import 'package:horyx_games/shared/network/room_client.dart';
 import 'package:horyx_games/shared/network/room_host.dart';
+import 'package:horyx_games/shared/network/undo_resign_negotiation.dart';
 import 'package:horyx_games/shared/utils/hint_bar.dart';
 import 'package:horyx_games/shared/widgets/confirm_dialog.dart';
 import 'package:horyx_games/shared/widgets/confirm_move_row.dart';
