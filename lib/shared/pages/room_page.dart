@@ -308,6 +308,8 @@ class _RoomPageState extends State<RoomPage> {
           capacity: host.capacity,
           seats: host.seats,
           mySeat: 1,
+          // 房主名字表含兜底（nameOf 永不返回空），座位行显示名字
+          seatNameOf: host.nameOf,
           // 加入地址（IP:端口，与加入页输入格式一致）独立成卡展示；
           // IP 获取失败时降级为手动查询提示
           joinAddress: _hostAddress == null
@@ -348,6 +350,8 @@ class _RoomPageState extends State<RoomPage> {
               capacity: client.capacity,
               seats: client.seats,
               mySeat: client.mySeat,
+              // 客户端名字快照无记录的座位回退「玩家 N」
+              seatNameOf: (seat) => client.seatNames[seat],
               hint: '你已加入，是玩家 ${client.mySeat ?? 0}，满员后自动开始',
             );
         }
@@ -419,6 +423,7 @@ class _RoomPageState extends State<RoomPage> {
     required int capacity,
     required List<int> seats,
     required int? mySeat,
+    required String? Function(int seat) seatNameOf,
     required String hint,
     String? joinAddress,
     String? joinCode,
@@ -437,7 +442,12 @@ class _RoomPageState extends State<RoomPage> {
               _buildJoinAddressCard(joinAddress, joinCode: joinCode),
             ],
             const SizedBox(height: 16),
-            _buildSeatCard(capacity: capacity, seats: seats, mySeat: mySeat),
+            _buildSeatCard(
+              capacity: capacity,
+              seats: seats,
+              mySeat: mySeat,
+              seatNameOf: seatNameOf,
+            ),
             const SizedBox(height: 16),
             // 等待状态文案：满员与否二态展示
             Text(
@@ -620,6 +630,7 @@ class _RoomPageState extends State<RoomPage> {
     required int capacity,
     required List<int> seats,
     required int? mySeat,
+    required String? Function(int seat) seatNameOf,
   }) {
     final palette = context.palette;
     return PanelCard(
@@ -667,6 +678,7 @@ class _RoomPageState extends State<RoomPage> {
                 seat: seat,
                 taken: seats.contains(seat),
                 mySeat: mySeat,
+                name: seatNameOf(seat),
               ),
             ),
         ],
@@ -675,9 +687,14 @@ class _RoomPageState extends State<RoomPage> {
   }
 }
 
-/// 单个座位行：座位号圆标 + 玩家标识（房主/你）或等待占位
+/// 单个座位行：座位号圆标 + 玩家名字（房主/你徽标）或等待占位
 class _SeatTile extends StatelessWidget {
-  const _SeatTile({required this.seat, required this.taken, this.mySeat});
+  const _SeatTile({
+    required this.seat,
+    required this.taken,
+    this.mySeat,
+    this.name,
+  });
 
   /// 座位号（1..N，1 号固定为房主）
   final int seat;
@@ -687,6 +704,9 @@ class _SeatTile extends StatelessWidget {
 
   /// 自己的座位号（null 表示房主视图外的未知视角，仅房主/客户端页传入）
   final int? mySeat;
+
+  /// 座位玩家名字（无记录时回退「玩家 N」展示）
+  final String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -727,7 +747,12 @@ class _SeatTile extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              taken ? '玩家 $seat${seat == 1 ? ' · 房主' : ''}' : '等待加入…',
+              // 名字快照缺失（含空串）时回退「玩家 N」
+              taken
+                  ? (name?.isNotEmpty ?? false)
+                      ? '$name${seat == 1 ? ' · 房主' : ''}'
+                      : '玩家 $seat${seat == 1 ? ' · 房主' : ''}'
+                  : '等待加入…',
               style: TextStyle(
                 color: taken ? palette.textPrimary : palette.textSecondary,
                 fontSize: 14,
