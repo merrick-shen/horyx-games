@@ -99,7 +99,7 @@
   - type 必须属于闭集：`{feat, ui, fix, refactor, init, style, docs, chore, perf, release, test, build}`。
   - scope 可选，使用时一次提交只允许一个（禁止多 scope 写法）。可用 scope 列表非封闭：代码中出现新模块（如新增游戏、新增共享层模块）时可按实际目录新增对应 scope，并同步登记到本文件；禁止使用与代码不对应的自创 scope：
     - 游戏：`gomoku`、`tank`、`chess`、`word_pk`、`scoreboard`
-    - 共享：`network`（联机）、`theme`（主题）、`storage`（存档）、`update`（检查更新）、`licenses`（开源许可）、`widgets`（通用组件）、`utils`（工具）、`game`（游戏注册）
+    - 共享：`network`（联机）、`theme`（主题）、`storage`（存档）、`profile`（用户资料）、`update`（检查更新）、`licenses`（开源许可）、`widgets`（通用组件）、`utils`（工具）、`game`（游戏注册）
     - 应用：`app`（应用层）
   - scope 选取：改动集中于单一模块时取该模块；跨模块改动取变更核心所在模块；改动很散、跨多个模块难分主次或属全局性改动时，可省略 scope；工程级变更（`init`/`release`/`build`、依赖升级类 `chore`、根目录文档等）省略 scope；资源文件随所属模块（如 `assets/tank/` → `tank`）。
   - 描述以动词开头，句尾不加标点；风格贴近项目历史 commit
