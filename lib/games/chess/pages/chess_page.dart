@@ -9,6 +9,7 @@ import 'package:horyx_games/games/chess/services/chess_storage.dart';
 import 'package:horyx_games/games/chess/widgets/chess_board_view.dart';
 import 'package:horyx_games/games/chess/widgets/chess_setup_view.dart';
 import 'package:horyx_games/shared/pages/room_page.dart';
+import 'package:horyx_games/shared/profile/profile_controller.dart';
 import 'package:horyx_games/shared/storage/archive_storage.dart';
 import 'package:horyx_games/shared/storage/game_archive_state.dart';
 import 'package:horyx_games/shared/widgets/app_top_bar.dart';
@@ -278,7 +279,9 @@ class _ChessPageState
   /// 局域网模式：创建房间并进入等待页（固定 2 人，自己为玩家 1）
   /// 满员后等待页自动跳转联机对局页（连接所有权随之移交）；
   /// 象棋无规格选项，gameStartPayload 保持空对象
-  void _createRoom() {
+  Future<void> _createRoom() async {
+    if (!await ensureProfileForOnline(context)) return;
+    if (!mounted) return;
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => RoomPage.host(
