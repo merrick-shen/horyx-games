@@ -30,20 +30,24 @@ class RoomPage extends StatefulWidget {
   const RoomPage.host({
     super.key,
     required this.gameName,
+    required this.hostName,
     required this.capacity,
     this.gameStartPayload = const {},
     this.hostGameBuilder,
     this.icon,
   }) : address = null,
        port = null,
+       myName = null,
        gameResolver = null;
 
   const RoomPage.client({
     super.key,
     required this.address,
     required this.port,
+    required this.myName,
     this.gameResolver,
   }) : gameName = null,
+       hostName = null,
        capacity = 0,
        gameStartPayload = const {},
        hostGameBuilder = null,
@@ -52,6 +56,12 @@ class RoomPage extends StatefulWidget {
   /// 游戏名称（仅房主模式；等待页顶部标识卡展示，如「单词PK」。
   /// 客户端模式加入前未知，改为取握手应答中的 gameName 展示）
   final String? gameName;
+
+  /// 房主名字（仅房主模式；入口经联机引导保证非空，随 RoomHost 展示于座位 1）
+  final String? hostName;
+
+  /// 客户端自己的名字（仅客户端模式；hello 握手携带）
+  final String? myName;
 
   /// 本局总人数（仅房主模式有效，含房主）
   final int capacity;
@@ -110,8 +120,11 @@ class _RoomPageState extends State<RoomPage> {
     if (widget.isHost) {
       _initHost();
     } else {
-      _client = RoomClient(host: widget.address!, port: widget.port!)
-        ..connect();
+      _client = RoomClient(
+        host: widget.address!,
+        port: widget.port!,
+        myName: widget.myName,
+      )..connect();
       // 满员开局 -> 跳转对局页（监听而非 build 中触发，导航不能发生在构建期）
       _client!.addListener(_onClientChanged);
     }
@@ -136,6 +149,7 @@ class _RoomPageState extends State<RoomPage> {
   Future<void> _initHost() async {
     final host = RoomHost(
       gameName: widget.gameName!,
+      hostName: widget.hostName,
       capacity: widget.capacity,
       gameStartPayload: widget.gameStartPayload,
     );
@@ -199,8 +213,11 @@ class _RoomPageState extends State<RoomPage> {
       old.removeListener(_onClientChanged);
       old.dispose();
     }
-    final client = RoomClient(host: widget.address!, port: widget.port!)
-      ..connect();
+    final client = RoomClient(
+      host: widget.address!,
+      port: widget.port!,
+      myName: widget.myName,
+    )..connect();
     client.addListener(_onClientChanged);
     setState(() => _client = client);
   }
